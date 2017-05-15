@@ -5,7 +5,10 @@ package com.lev.mvpcleanarch.data.entity;
  * Date: 14.05.2017
  */
 
-public class Task extends Entity {
+public class Task {
+
+    public static final String CLOUD_PATH = "task/";
+    public static final String TABLE = "task";
 
     private String title;
     private String description;
@@ -33,15 +36,5 @@ public class Task extends Entity {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
-    }
-
-    @Override
-    public String getPath() {
-        return "task";
-    }
-
-    @Override
-    public String getTableName() {
-        return "task";
     }
 }

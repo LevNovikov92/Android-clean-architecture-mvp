@@ -1,9 +1,10 @@
 package com.lev.mvpcleanarch.di;
 
 import com.lev.mvpcleanarch.Application;
+import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
 import com.lev.mvpcleanarch.data.repositories.TaskRepository;
-import com.lev.mvpcleanarch.data.source.cloud.Api;
-import com.lev.mvpcleanarch.data.source.cloud.ApiImpl;
+import com.lev.mvpcleanarch.data.source.cloud.CloudApi;
+import com.lev.mvpcleanarch.data.source.cloud.CloudApiImpl;
 import com.lev.mvpcleanarch.data.source.cloud.CloudDataSource;
 import com.lev.mvpcleanarch.data.source.local.LocalDataSource;
 
@@ -21,6 +22,8 @@ import okhttp3.OkHttpClient;
 @Module
 public class DataModule {
 
+    private final String BASE_URL = "http://localhost/";
+
     @Singleton
     @Provides
     OkHttpClient provideOkHttpClient() {
@@ -29,8 +32,8 @@ public class DataModule {
 
     @Singleton
     @Provides
-    Api provideApi() {
-        final ApiImpl api = new ApiImpl();
+    CloudApi provideApi() {
+        final CloudApiImpl api = new CloudApiImpl(BASE_URL);
         Application.getComponent().inject(api);
         return api;
     }
@@ -38,7 +41,9 @@ public class DataModule {
     @Singleton
     @Provides
     CloudDataSource provideCloudDataSource() {
-        return new CloudDataSource();
+        final CloudDataSource dataSource = new CloudDataSource();
+        Application.getComponent().inject(dataSource);
+        return dataSource;
     }
 
     @Singleton
@@ -53,5 +58,11 @@ public class DataModule {
         final TaskRepository repository = new TaskRepository();
         Application.getComponent().inject(repository);
         return repository;
+    }
+
+    @Singleton
+    @Provides
+    TaskMapper provideTaskMapper() {
+        return new TaskMapper();
     }
 }

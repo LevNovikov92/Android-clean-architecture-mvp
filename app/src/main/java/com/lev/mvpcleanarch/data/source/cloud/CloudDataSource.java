@@ -1,12 +1,14 @@
 package com.lev.mvpcleanarch.data.source.cloud;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import android.support.annotation.VisibleForTesting;
+
+import com.lev.mvpcleanarch.data.entity.Task;
+import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
 import com.lev.mvpcleanarch.data.source.DataSource;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
@@ -17,17 +19,25 @@ import io.reactivex.Observable;
 
 public class CloudDataSource implements DataSource {
 
+    @SuppressWarnings("WeakerAccess")
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @Inject
+    public CloudApi api;
+
+    @SuppressWarnings("WeakerAccess")
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @Inject
+    public TaskMapper taskMapper;
 
     @Override
-    public <T> Observable<List<T>> findAll(Class<T> clazz) {
+    public Observable<List<Task>> getTasks() {
         return Observable.create(emitter -> {
             try {
-                final T instance = clazz.newInstance();
-                final Gson gson = new Gson();
-                Type collectionType = new TypeToken<Collection<T>>(){}.getType();
-                T[] tasks = gson.fromJson("aasd", collectionType);
+                final String json = api.jsonGet(Task.CLOUD_PATH);
+                emitter.onNext(taskMapper.fromJson(json));
+                emitter.onComplete();
             } catch (Exception e) {
-                e.printStackTrace();
+                emitter.onError(e);
             }
         });
     }

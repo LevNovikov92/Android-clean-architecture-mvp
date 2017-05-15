@@ -1,5 +1,7 @@
 package com.lev.mvpcleanarch.data.source;
 
+import com.lev.mvpcleanarch.data.entity.Task;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -11,5 +13,5 @@ import io.reactivex.Observable;
 
 public interface DataSource {
 
-    <T> Observable<List<T>>  findAll(Class<T> clazz);
+    Observable<List<Task>>  getTasks();
 }

@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 public class LocalDataSource implements DataSource {
 
     @Override
-    public Observable<List<Task>> findAll() {
+    public Observable<List<Task>> getTasks() {
         return null;
     }
 }

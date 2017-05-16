@@ -1,18 +1,24 @@
-package com.lev.mvpcleanarch.data.entity;
+package com.lev.mvpcleanarch.domain;
 
 /**
  * Author: Lev
- * Date: 14.05.2017
+ * Date: 15.05.2017
  */
 
 public class Task {
 
-    public static final String CLOUD_PATH = "task/";
-    public static final String TABLE = "task";
-
+    private String id;
     private String title;
     private String description;
     private boolean isCompleted;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

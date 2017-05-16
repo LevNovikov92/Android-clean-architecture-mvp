@@ -1,6 +1,6 @@
 package com.lev.mvpcleanarch.data.repositories;
 
-import com.lev.mvpcleanarch.data.entity.Task;
+import com.lev.mvpcleanarch.data.entity.TaskEntity;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import io.reactivex.Observable;
 
 public class TaskRepository extends BaseRepository {
 
-    public Observable<List<Task>> getTasks() {
+    public Observable<List<TaskEntity>> getTasks() {
         return getDataSource().getTasks();
     }
 }

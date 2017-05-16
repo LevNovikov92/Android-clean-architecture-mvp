@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 abstract class BaseRepository {
 
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     @Inject
     public DataSourceFactory mDataSourceFactory;

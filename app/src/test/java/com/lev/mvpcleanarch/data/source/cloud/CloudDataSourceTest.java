@@ -1,6 +1,6 @@
 package com.lev.mvpcleanarch.data.source.cloud;
 
-import com.lev.mvpcleanarch.data.entity.Task;
+import com.lev.mvpcleanarch.data.entity.TaskEntity;
 import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
 
 import junit.framework.Assert;
@@ -25,7 +25,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 public class CloudDataSourceTest {
 
     private CloudApiImpl api;
-    private final String json =
+    private static final String json =
             "[" +
                     "{" +
                     "\"title\": \"title1\"," +
@@ -70,8 +70,8 @@ public class CloudDataSourceTest {
         source.taskMapper = new TaskMapper();
         source.api = api;
 
-        final TestObserver<List<Task>> observer = source.getTasks().test();
-        final List<Task> tasks = observer.values().get(0);
+        final TestObserver<List<TaskEntity>> observer = source.getTasks().test();
+        final List<TaskEntity> tasks = observer.values().get(0);
         observer.assertComplete();
         observer.assertValueCount(1);
         Assert.assertEquals(3, tasks.size());

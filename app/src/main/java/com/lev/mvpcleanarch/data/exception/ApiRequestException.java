@@ -1,4 +1,4 @@
-package com.lev.mvpcleanarch.exception;
+package com.lev.mvpcleanarch.data.exception;
 
 /**
  * Author: Lev
@@ -7,7 +7,7 @@ package com.lev.mvpcleanarch.exception;
 
 public class ApiRequestException extends Exception {
 
-    private int responseCode;
+    private final int responseCode;
 
     public ApiRequestException(int responseCode, String message) {
         super(message);

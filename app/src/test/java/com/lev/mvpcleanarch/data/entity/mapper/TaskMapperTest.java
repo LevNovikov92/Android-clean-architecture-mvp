@@ -1,7 +1,7 @@
 package com.lev.mvpcleanarch.data.entity.mapper;
 
 import com.google.gson.JsonSyntaxException;
-import com.lev.mvpcleanarch.data.entity.Task;
+import com.lev.mvpcleanarch.data.entity.TaskEntity;
 
 import junit.framework.Assert;
 
@@ -36,7 +36,7 @@ public class TaskMapperTest {
                 "]";
 
         final TaskMapper mapper = new TaskMapper();
-        List<Task> tasks = mapper.fromJson(json);
+        List<TaskEntity> tasks = mapper.fromJson(json);
 
         Assert.assertEquals(3, tasks.size());
         Assert.assertEquals("title1", tasks.get(0).getTitle());

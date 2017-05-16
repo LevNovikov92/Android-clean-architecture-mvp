@@ -1,11 +1,15 @@
 package com.lev.mvpcleanarch.di;
 
-import com.lev.mvpcleanarch.Application;
+import android.content.Context;
+
+import com.lev.mvpcleanarch.App;
 import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
 import com.lev.mvpcleanarch.data.repositories.TaskRepository;
 import com.lev.mvpcleanarch.data.source.cloud.CloudApi;
 import com.lev.mvpcleanarch.data.source.cloud.CloudApiImpl;
 import com.lev.mvpcleanarch.data.source.cloud.CloudDataSource;
+import com.lev.mvpcleanarch.data.source.local.DataBaseHelper;
+import com.lev.mvpcleanarch.data.source.local.DbOpenHelper;
 import com.lev.mvpcleanarch.data.source.local.LocalDataSource;
 
 import javax.inject.Singleton;
@@ -22,7 +26,11 @@ import okhttp3.OkHttpClient;
 @Module
 public class DataModule {
 
-    private final String BASE_URL = "http://localhost/";
+    private final DbOpenHelper mDBOpenHelper;
+
+    public DataModule(Context context) {
+        mDBOpenHelper = new DbOpenHelper(context);
+    }
 
     @Singleton
     @Provides
@@ -33,8 +41,8 @@ public class DataModule {
     @Singleton
     @Provides
     CloudApi provideApi() {
-        final CloudApiImpl api = new CloudApiImpl(BASE_URL);
-        Application.getComponent().inject(api);
+        final CloudApiImpl api = new CloudApiImpl("http://localhost/");
+        App.getComponent().inject(api);
         return api;
     }
 
@@ -42,21 +50,23 @@ public class DataModule {
     @Provides
     CloudDataSource provideCloudDataSource() {
         final CloudDataSource dataSource = new CloudDataSource();
-        Application.getComponent().inject(dataSource);
+        App.getComponent().inject(dataSource);
         return dataSource;
     }
 
     @Singleton
     @Provides
     LocalDataSource provideLocalDataSource() {
-        return new LocalDataSource();
+        final LocalDataSource source = new LocalDataSource();
+        App.getComponent().inject(source);
+        return source;
     }
 
     @Singleton
     @Provides
     TaskRepository provideTaskRepository() {
         final TaskRepository repository = new TaskRepository();
-        Application.getComponent().inject(repository);
+        App.getComponent().inject(repository);
         return repository;
     }
 
@@ -64,5 +74,11 @@ public class DataModule {
     @Provides
     TaskMapper provideTaskMapper() {
         return new TaskMapper();
+    }
+
+    @Singleton
+    @Provides
+    DataBaseHelper provideDbHelper() {
+        return mDBOpenHelper;
     }
 }

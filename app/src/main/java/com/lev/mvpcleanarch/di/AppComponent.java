@@ -4,6 +4,7 @@ import com.lev.mvpcleanarch.data.repositories.TaskRepository;
 import com.lev.mvpcleanarch.data.source.DataSourceFactory;
 import com.lev.mvpcleanarch.data.source.cloud.CloudApiImpl;
 import com.lev.mvpcleanarch.data.source.cloud.CloudDataSource;
+import com.lev.mvpcleanarch.data.source.local.LocalDataSource;
 
 import javax.inject.Singleton;
 
@@ -25,4 +26,6 @@ public interface AppComponent {
     void inject(TaskRepository repository);
 
     void inject(CloudDataSource dataSource);
+
+    void inject(LocalDataSource source);
 }

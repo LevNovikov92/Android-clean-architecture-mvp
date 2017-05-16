@@ -2,7 +2,7 @@ package com.lev.mvpcleanarch.data.source.cloud;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.lev.mvpcleanarch.data.entity.Task;
+import com.lev.mvpcleanarch.data.entity.TaskEntity;
 import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
 import com.lev.mvpcleanarch.data.source.DataSource;
 
@@ -30,12 +30,15 @@ public class CloudDataSource implements DataSource {
     public TaskMapper taskMapper;
 
     @Override
-    public Observable<List<Task>> getTasks() {
+    public Observable<List<TaskEntity>> getTasks() {
         return Observable.create(emitter -> {
             try {
-                final String json = api.jsonGet(Task.CLOUD_PATH);
-                emitter.onNext(taskMapper.fromJson(json));
-                emitter.onComplete();
+                api.jsonGet(TaskEntity.CLOUD_PATH).subscribe(
+                        json -> {
+                            emitter.onNext(taskMapper.fromJson(json));
+                            emitter.onComplete();
+                        },
+                        emitter::onError);
             } catch (Exception e) {
                 emitter.onError(e);
             }

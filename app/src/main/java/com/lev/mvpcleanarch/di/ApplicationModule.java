@@ -2,7 +2,7 @@ package com.lev.mvpcleanarch.di;
 
 import android.content.Context;
 
-import com.lev.mvpcleanarch.Application;
+import com.lev.mvpcleanarch.App;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,21 +15,21 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    private final Application mApplication;
+    private final App mApp;
 
-    public ApplicationModule(Application application) {
-        mApplication = application;
+    public ApplicationModule(App app) {
+        mApp = app;
     }
 
     @SuppressWarnings("WeakerAccess")
     @Provides
     public Context provideContext() {
-        return mApplication.getApplicationContext();
+        return mApp.getApplicationContext();
     }
 
     @SuppressWarnings("WeakerAccess")
     @Provides
-    public Application provideApplication() {
-        return mApplication;
+    public App provideApplication() {
+        return mApp;
     }
 }

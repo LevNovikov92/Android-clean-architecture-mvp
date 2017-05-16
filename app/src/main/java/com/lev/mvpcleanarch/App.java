@@ -10,7 +10,7 @@ import com.lev.mvpcleanarch.di.DataModule;
  * Date: 14.05.2017
  */
 
-public class Application extends android.app.Application {
+public class App extends android.app.Application {
 
     private static AppComponent mComponent;
 
@@ -23,7 +23,7 @@ public class Application extends android.app.Application {
     private void initializeDI() {
         mComponent = DaggerAppComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .dataModule(new DataModule())
+                .dataModule(new DataModule(this))
                 .build();
     }
 

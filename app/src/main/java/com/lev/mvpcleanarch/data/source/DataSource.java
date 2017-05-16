@@ -1,6 +1,6 @@
 package com.lev.mvpcleanarch.data.source;
 
-import com.lev.mvpcleanarch.data.entity.Task;
+import com.lev.mvpcleanarch.data.entity.TaskEntity;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ import io.reactivex.Observable;
 
 public interface DataSource {
 
-    Observable<List<Task>>  getTasks();
+    Observable<List<TaskEntity>>  getTasks();
 }

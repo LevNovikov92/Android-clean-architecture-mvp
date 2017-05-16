@@ -16,11 +16,11 @@ import javax.inject.Inject;
 
 public class DataSourceFactory {
 
-    public Context context;
+    private final Context mContext;
 
-    private CloudDataSource mCloudDataSource;
+    private final CloudDataSource mCloudDataSource;
 
-    private LocalDataSource mLocalDataSource;
+    private final LocalDataSource mLocalDataSource;
 
     @SuppressWarnings("WeakerAccess")
     @Inject
@@ -28,7 +28,7 @@ public class DataSourceFactory {
             Context context,
             CloudDataSource cloudDataSource,
             LocalDataSource localDataSource) {
-        this.context = context;
+        this.mContext = context;
         this.mCloudDataSource = cloudDataSource;
         this.mLocalDataSource = localDataSource;
     }
@@ -40,7 +40,7 @@ public class DataSourceFactory {
 
     private boolean isInternetConnected() {
         final ConnectivityManager connectivityManager =
-                (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) this.mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return  networkInfo != null && networkInfo.isConnectedOrConnecting();
     }

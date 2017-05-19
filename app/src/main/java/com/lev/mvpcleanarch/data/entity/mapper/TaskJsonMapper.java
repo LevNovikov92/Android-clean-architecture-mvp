@@ -9,16 +9,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Author: Lev
  * Date: 15.05.2017
  */
 
-public class TaskMapper {
+public class TaskJsonMapper {
 
     private final Gson mGson;
 
-    public TaskMapper() {
+    @Inject
+    public TaskJsonMapper() {
         mGson = new Gson();
     }
 

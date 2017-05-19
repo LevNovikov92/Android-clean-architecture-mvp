@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.VisibleForTesting;
 
 import com.lev.mvpcleanarch.data.entity.TaskEntity;
 import com.lev.mvpcleanarch.data.source.DataSource;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import okhttp3.internal.Util;
@@ -22,12 +22,15 @@ import okhttp3.internal.Util;
  * Date: 14.05.2017
  */
 
+@Singleton
 public class LocalDataSource implements DataSource {
 
-    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private final DataBaseHelper mDbHelper;
+
     @Inject
-    public DataBaseHelper dbHelper;
+    LocalDataSource(DataBaseHelper dbHelper) {
+        this.mDbHelper = dbHelper;
+    }
 
     @Override
     public Observable<List<TaskEntity>> getTasks() {
@@ -35,7 +38,7 @@ public class LocalDataSource implements DataSource {
             Cursor cursor = null;
             SQLiteDatabase db = null;
             try {
-                db = dbHelper.getReadableDatabase();
+                db = mDbHelper.getReadableDatabase();
                 cursor = db.query(TaskEntity.TABLE, TaskEntity.getColumns(), null, null, null, null, null);
                 final List<TaskEntity> tasks = new ArrayList<>();
                 while (cursor.moveToNext()) {

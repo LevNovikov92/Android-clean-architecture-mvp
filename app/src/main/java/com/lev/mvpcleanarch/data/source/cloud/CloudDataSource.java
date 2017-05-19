@@ -1,14 +1,13 @@
 package com.lev.mvpcleanarch.data.source.cloud;
 
-import android.support.annotation.VisibleForTesting;
-
 import com.lev.mvpcleanarch.data.entity.TaskEntity;
-import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
+import com.lev.mvpcleanarch.data.entity.mapper.TaskJsonMapper;
 import com.lev.mvpcleanarch.data.source.DataSource;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
@@ -17,25 +16,26 @@ import io.reactivex.Observable;
  * Date: 14.05.2017
  */
 
+@Singleton
 public class CloudDataSource implements DataSource {
 
-    @SuppressWarnings("WeakerAccess")
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    @Inject
-    public CloudApi api;
+    private final CloudApi mApi;
 
-    @SuppressWarnings("WeakerAccess")
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private final TaskJsonMapper mTaskMapper;
+
     @Inject
-    public TaskMapper taskMapper;
+    CloudDataSource(CloudApi api, TaskJsonMapper taskMapper) {
+        this.mApi = api;
+        this.mTaskMapper = taskMapper;
+    }
 
     @Override
     public Observable<List<TaskEntity>> getTasks() {
         return Observable.create(emitter -> {
             try {
-                api.jsonGet(TaskEntity.CLOUD_PATH).subscribe(
+                mApi.jsonGet(TaskEntity.CLOUD_PATH).subscribe(
                         json -> {
-                            emitter.onNext(taskMapper.fromJson(json));
+                            emitter.onNext(mTaskMapper.fromJson(json));
                             emitter.onComplete();
                         },
                         emitter::onError);

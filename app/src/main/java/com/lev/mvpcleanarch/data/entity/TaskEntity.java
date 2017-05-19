@@ -62,7 +62,7 @@ public class TaskEntity implements Entity {
         isCompleted = completed;
     }
 
-    public void fromContentValues(ContentValues cv) {
+    private void fromContentValues(ContentValues cv) {
         this.setId(cv.getAsString(COLUMN_ID));
         this.setTitle(cv.getAsString(COLUMN_TITLE));
         this.setDescription(cv.getAsString(COLUMN_DESCRIPTION));

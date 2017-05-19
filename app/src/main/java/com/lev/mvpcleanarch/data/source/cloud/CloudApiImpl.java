@@ -1,6 +1,5 @@
 package com.lev.mvpcleanarch.data.source.cloud;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.lev.mvpcleanarch.data.exception.ApiRequestException;
@@ -26,21 +25,16 @@ import okhttp3.internal.Util;
 public class CloudApiImpl implements CloudApi {
 
     private final String mBaseUrl;
+    private final OkHttpClient mClient;
 
-    public CloudApiImpl(String url) {
+    @Inject
+    public CloudApiImpl(String url, OkHttpClient client) {
         mBaseUrl = url;
+        mClient = client;
     }
 
-    @SuppressWarnings("WeakerAccess")
-    @Inject
-    public Context context;
-
-    @SuppressWarnings("WeakerAccess")
-    @Inject
-    public OkHttpClient client;
-
     Response request(Request request) throws IOException {
-        return client.newCall(request).execute();
+        return mClient.newCall(request).execute();
     }
 
     Response get(String url, Headers headers) throws IOException {
@@ -49,7 +43,7 @@ public class CloudApiImpl implements CloudApi {
                 .url(url)
                 .headers(headers)
                 .build();
-        return client.newCall(request).execute();
+        return mClient.newCall(request).execute();
     }
 
     private Observable<String> requestJson(String method, @Nullable RequestBody body, String path) {
@@ -60,7 +54,7 @@ public class CloudApiImpl implements CloudApi {
                     .build();
             Response response = null;
             try {
-                response = client.newCall(request).execute();
+                response = mClient.newCall(request).execute();
                 final ResponseBody responseBody = response.body();
                 if (response.code() != 200) {
                     throw new ApiRequestException(response.code(), responseBody != null ?

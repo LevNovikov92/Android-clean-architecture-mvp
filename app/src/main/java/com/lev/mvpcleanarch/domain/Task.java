@@ -7,17 +7,17 @@ package com.lev.mvpcleanarch.domain;
 
 public class Task {
 
-    private String id;
+    private final String id;
     private String title;
     private String description;
     private boolean isCompleted;
 
-    public String getId() {
-        return id;
+    public Task(String id) {
+        this.id = id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {

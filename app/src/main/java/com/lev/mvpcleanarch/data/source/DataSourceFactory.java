@@ -42,6 +42,6 @@ public class DataSourceFactory {
         final ConnectivityManager connectivityManager =
                 (ConnectivityManager) this.mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return  networkInfo != null && networkInfo.isConnectedOrConnecting();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting() && false; //TODO force to use local storage
     }
 }

@@ -35,7 +35,7 @@ public class TaskMapperTest {
                     "}" +
                 "]";
 
-        final TaskMapper mapper = new TaskMapper();
+        final TaskJsonMapper mapper = new TaskJsonMapper();
         List<TaskEntity> tasks = mapper.fromJson(json);
 
         Assert.assertEquals(3, tasks.size());
@@ -52,7 +52,7 @@ public class TaskMapperTest {
 
     @Test(expected = JsonSyntaxException.class)
     public void testInvalidJson() {
-        new TaskMapper().fromJson("invalid json");
+        new TaskJsonMapper().fromJson("invalid json");
     }
 
 }

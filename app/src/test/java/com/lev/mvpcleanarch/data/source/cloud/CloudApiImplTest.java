@@ -9,8 +9,10 @@ import java.io.IOException;
 
 import io.reactivex.observers.TestObserver;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.internal.Util;
@@ -69,8 +71,7 @@ public class CloudApiImplTest {
         server.setDispatcher(dispatcher);
         server.start();
         baseUrl = server.url("/").toString();
-        api = new CloudApiImpl(baseUrl);
-        api.client = new OkHttpClient();
+        api = new CloudApiImpl(baseUrl, new OkHttpClient());
     }
 
     @Test
@@ -94,7 +95,7 @@ public class CloudApiImplTest {
     @Test
     public void requestPost() throws Exception {
         final Request request = new Request.Builder()
-                .method("POST", null)
+                .method("POST", RequestBody.create(MediaType.parse("application/json"), ""))
                 .url(baseUrl + "task/")
                 .build();
         Response response = null;

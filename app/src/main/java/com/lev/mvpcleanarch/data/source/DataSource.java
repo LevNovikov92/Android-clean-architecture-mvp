@@ -13,5 +13,5 @@ import io.reactivex.Observable;
 
 public interface DataSource {
 
-    Observable<List<TaskEntity>>  getTasks();
+    Observable<List<TaskEntity>> getTasks();
 }

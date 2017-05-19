@@ -1,11 +1,7 @@
 package com.lev.mvpcleanarch.data.repositories;
 
-import android.support.annotation.VisibleForTesting;
-
 import com.lev.mvpcleanarch.data.source.DataSource;
 import com.lev.mvpcleanarch.data.source.DataSourceFactory;
-
-import javax.inject.Inject;
 
 /**
  * Author: Lev
@@ -14,10 +10,11 @@ import javax.inject.Inject;
 
 abstract class BaseRepository {
 
-    @SuppressWarnings({"WeakerAccess", "CanBeFinal"})
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    @Inject
-    public DataSourceFactory mDataSourceFactory;
+    private final DataSourceFactory mDataSourceFactory;
+
+    BaseRepository(DataSourceFactory mDataSourceFactory) {
+        this.mDataSourceFactory = mDataSourceFactory;
+    }
 
     DataSource getDataSource() {
         return mDataSourceFactory.getDataSource();

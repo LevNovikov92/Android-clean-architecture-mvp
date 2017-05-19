@@ -1,7 +1,7 @@
 package com.lev.mvpcleanarch.data.source.cloud;
 
 import com.lev.mvpcleanarch.data.entity.TaskEntity;
-import com.lev.mvpcleanarch.data.entity.mapper.TaskMapper;
+import com.lev.mvpcleanarch.data.entity.mapper.TaskJsonMapper;
 
 import junit.framework.Assert;
 
@@ -60,15 +60,12 @@ public class CloudDataSourceTest {
         server.setDispatcher(dispatcher);
         server.start();
         String baseUrl = server.url("/").toString();
-        api = new CloudApiImpl(baseUrl);
-        api.client = new OkHttpClient();
+        api = new CloudApiImpl(baseUrl, new OkHttpClient());
     }
 
     @Test
     public void getTasks() throws Exception {
-        final CloudDataSource source = new CloudDataSource();
-        source.taskMapper = new TaskMapper();
-        source.api = api;
+        final CloudDataSource source = new CloudDataSource(api, new TaskJsonMapper());
 
         final TestObserver<List<TaskEntity>> observer = source.getTasks().test();
         final List<TaskEntity> tasks = observer.values().get(0);

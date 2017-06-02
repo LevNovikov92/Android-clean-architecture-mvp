@@ -17,5 +17,4 @@ public interface TaskListView extends View {
 
     void displayTasks(List<Task> tasks);
 
-    void showMessage(String message);
 }

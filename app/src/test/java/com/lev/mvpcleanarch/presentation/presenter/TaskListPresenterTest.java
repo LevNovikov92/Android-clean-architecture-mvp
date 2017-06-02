@@ -1,5 +1,7 @@
 package com.lev.mvpcleanarch.presentation.presenter;
 
+import android.content.Context;
+
 import com.lev.mvpcleanarch.domain.Task;
 import com.lev.mvpcleanarch.domain.interactor.GetTasksInteractor;
 import com.lev.mvpcleanarch.domain.repository.TaskRepository;
@@ -39,7 +41,7 @@ public class TaskListPresenterTest {
         view = Mockito.mock(TaskListView.class);
         repository = Mockito.mock(TaskRepository.class);
         final GetTasksInteractor interactor = new GetTasksInteractor(mScheduler, mScheduler, repository);
-        mPresenter = new TaskListPresenter(interactor);
+        mPresenter = new TaskListPresenter(interactor, Mockito.mock(Context.class));
     }
 
     @Test

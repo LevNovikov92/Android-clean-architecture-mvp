@@ -4,10 +4,11 @@ import dagger.Module;
 
 /**
  * Author: Lev
- * Date: 17.05.2017
+ * Date: 02.06.2017
  */
 
+@SuppressWarnings("WeakerAccess")
 @Module
-class PresentationModule {
+public class TaskListModule {
 
 }

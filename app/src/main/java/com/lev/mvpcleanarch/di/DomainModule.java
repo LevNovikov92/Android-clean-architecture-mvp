@@ -17,18 +17,21 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 @Module
-class DomainModule {
+public class DomainModule {
+
+    public static final String SCHEDULER_WORKER = "WorkerScheduler";
+    public static final String SCHEDULER_UI = "UiScheduler";
 
     @Singleton
     @Provides
-    @Named("WorkerScheduler")
+    @Named(SCHEDULER_WORKER)
     Scheduler provideWorkerScheduler() {
         return Schedulers.from(Executors.newFixedThreadPool(4));
     }
 
     @Singleton
     @Provides
-    @Named("UiScheduler")
+    @Named(SCHEDULER_UI)
     Scheduler provideUiScheduler() {
         return AndroidSchedulers.mainThread();
     }

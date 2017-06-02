@@ -1,5 +1,8 @@
 package com.lev.mvpcleanarch.presentation.presenter;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.lev.mvpcleanarch.domain.Task;
 import com.lev.mvpcleanarch.domain.interactor.GetTasksInteractor;
 import com.lev.mvpcleanarch.presentation.view.TaskListView;
@@ -18,13 +21,15 @@ import io.reactivex.observers.DisposableObserver;
 
 public class TaskListPresenter implements Presenter {
 
-    private TaskListView mView;
-
+    private final Context mContext;
     private final GetTasksInteractor mInteractor;
 
+    private TaskListView mView;
+
     @Inject
-    TaskListPresenter(GetTasksInteractor interactor) {
+    TaskListPresenter(GetTasksInteractor interactor, Context context) {
         this.mInteractor = interactor;
+        this.mContext = context;
     }
 
     public void setView(TaskListView view) {
@@ -67,6 +72,6 @@ public class TaskListPresenter implements Presenter {
     }
 
     public void onItemClick(String id) {
-        mView.showMessage("Task id: " + id);
+        Toast.makeText(mContext, "Task id: " + id, Toast.LENGTH_SHORT).show();
     }
 }

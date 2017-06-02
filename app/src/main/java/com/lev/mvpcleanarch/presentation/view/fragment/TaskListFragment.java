@@ -10,14 +10,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.lev.mvpcleanarch.App;
 import com.lev.mvpcleanarch.R;
 import com.lev.mvpcleanarch.domain.Task;
 import com.lev.mvpcleanarch.presentation.presenter.Presenter;
 import com.lev.mvpcleanarch.presentation.presenter.TaskListPresenter;
 import com.lev.mvpcleanarch.presentation.view.TaskListView;
+import com.lev.mvpcleanarch.presentation.view.activity.MainActivity;
 import com.lev.mvpcleanarch.presentation.view.adapter.TaskListAdapter;
 
 import java.util.List;
@@ -46,11 +45,15 @@ public class TaskListFragment extends BaseFragment implements TaskListView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent().inject(this);
+        initializeDI();
         mAdapter = new TaskListAdapter(getContext(), id -> {
             if (presenter != null) presenter.onItemClick(id);
         });
         setHasOptionsMenu(true);
+    }
+
+    private void initializeDI() {
+        ((MainActivity) getActivity()).getComponent().inject(this);
     }
 
     @Nullable
@@ -94,11 +97,6 @@ public class TaskListFragment extends BaseFragment implements TaskListView {
         progressBar.setVisibility(View.GONE);
         zeroState.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

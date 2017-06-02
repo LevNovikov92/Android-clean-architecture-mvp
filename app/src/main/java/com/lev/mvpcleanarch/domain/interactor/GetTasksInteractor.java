@@ -1,5 +1,6 @@
 package com.lev.mvpcleanarch.domain.interactor;
 
+import com.lev.mvpcleanarch.di.DomainModule;
 import com.lev.mvpcleanarch.domain.Task;
 import com.lev.mvpcleanarch.domain.repository.TaskRepository;
 
@@ -21,8 +22,8 @@ public class GetTasksInteractor extends Interactor<List<Task>, Void> {
     private final TaskRepository mTaskRepository;
 
     @Inject
-    public GetTasksInteractor(@Named("WorkerScheduler") Scheduler workerScheduler,
-                       @Named("UiScheduler") Scheduler uiScheduler, TaskRepository taskRepository) {
+    public GetTasksInteractor(@Named(DomainModule.SCHEDULER_WORKER) Scheduler workerScheduler,
+                              @Named(DomainModule.SCHEDULER_UI) Scheduler uiScheduler, TaskRepository taskRepository) {
         super(workerScheduler, uiScheduler);
         mTaskRepository = taskRepository;
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.lev.mvpcleanarch.App;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,23 +15,18 @@ import dagger.Provides;
  */
 
 @Module
-public class ApplicationModule {
+public class AppModule {
 
     private final App mApp;
 
-    public ApplicationModule(App app) {
+    public AppModule(App app) {
         mApp = app;
     }
 
     @SuppressWarnings("WeakerAccess")
+    @Singleton
     @Provides
     public Context provideContext() {
-        return mApp.getApplicationContext();
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    @Provides
-    public App provideApplication() {
         return mApp;
     }
 }

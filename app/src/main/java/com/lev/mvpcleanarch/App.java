@@ -1,18 +1,21 @@
 package com.lev.mvpcleanarch;
 
+import android.app.Application;
+
 import com.lev.mvpcleanarch.di.AppComponent;
-import com.lev.mvpcleanarch.di.ApplicationModule;
+import com.lev.mvpcleanarch.di.AppModule;
 import com.lev.mvpcleanarch.di.DaggerAppComponent;
 import com.lev.mvpcleanarch.di.DataModule;
+import com.lev.mvpcleanarch.di.DomainModule;
 
 /**
  * Author: Lev
  * Date: 14.05.2017
  */
 
-public class App extends android.app.Application {
+public class App extends Application {
 
-    private static AppComponent mComponent;
+    private AppComponent mComponent;
 
     @Override
     public void onCreate() {
@@ -22,12 +25,13 @@ public class App extends android.app.Application {
 
     private void initializeDI() {
         mComponent = DaggerAppComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+                .appModule(new AppModule(this))
                 .dataModule(new DataModule(this))
+                .domainModule(new DomainModule())
                 .build();
     }
 
-    public static AppComponent getComponent() {
+    public AppComponent getComponent() {
         return mComponent;
     }
 }
